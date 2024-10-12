@@ -27,6 +27,18 @@ async def add(ctx, left: int, right: int):
     """Adds two numbers together."""
     await ctx.send(left + right)
 
+@bot.command()
+async def multiply(ctx, left: int, right: int):
+    """Adds two numbers together."""
+    await ctx.send(left * right)
+
+
+@bot.command()
+async def divide(ctx, left: int, right: int):
+    """Adds two numbers together."""
+    await ctx.send(left / right)
+
+
 
 @bot.command()
 async def roll(ctx, dice: str):
@@ -81,4 +93,4 @@ async def _bot(ctx):
 
 
 
-bot.run('MTI5MjUyNDkzNzUzNzUyMzc0Mw.GwXo89.cCNEhnD1QpepIWn9YG9Oa50_xFFJREWhi34If0')
+bot.run('MTI4OTYyODI1MzE3ODU2NDY5MQ.G_jp43.pVKFe3CFyLu4NYGtzi6QDLYV0RaiXde9aIcafQ')
