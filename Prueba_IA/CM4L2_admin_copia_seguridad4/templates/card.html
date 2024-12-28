@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ card.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .card-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .card-header {
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            padding-right: 100px;  /* Espacio para el número */
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 600;
+        }
+
+        h3 {
+            color: #666;
+            margin: 10px 0 0;
+            font-weight: 400;
+            font-size: 1.3em;
+        }
+
+        .content {
+            font-size: 1.1em;
+            color: #444;
+            line-height: 1.8;
+            margin: 25px 0;
+            padding: 0 10px;
+        }
+
+        .actions {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
+        }
+
+        .back-button i {
+            margin-right: 8px;
+        }
+
+        .error {
+            background-color: #fdeaea;
+            color: #e74c3c;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <span class="card-number">Tarjeta #{{ loop.index }}</span>
+        <div class="card-header">
+            <h1>{{ card.title }}</h1>
+            <h3>{{ card.subtitle }}</h3>
+        </div>
+
+        <div class="content">
+            <p>{{ card.text }}</p>
+        </div>
+
+        <div class="actions">
+            <a href="/index" class="back-button">
+                <i>←</i> Volver al inicio
+            </a>
+        </div>
+
+        {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html> 

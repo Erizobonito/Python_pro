@@ -1,0 +1,63 @@
+/* Estilos generales */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #282c34;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Contenedor de los cubos */
+  .contenedor {
+    display: flex;
+    gap: 20px;
+  }
+  
+  /* Estilos base para los cubos */
+  .cubo {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 10px;
+  }
+  
+  /* Cubo 1: Rotación continua */
+  .rotacion {
+    background-color: #FF5733;
+    animation: rotacionCubo 3s infinite linear;
+  }
+  
+  @keyframes rotacionCubo {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Cubo 2: Escala de agrandamiento y reducción */
+  .escala {
+    background-color: #33FF57;
+    animation: escalaCubo 2s infinite ease-in-out;
+  }
+  
+  @keyframes escalaCubo {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+  }
+  
+  /* Cubo 3: Movimiento de izquierda a derecha */
+  .movimiento {
+    background-color: #3357FF;
+    animation: movimientoCubo 4s infinite ease-in-out;
+  }
+  
+  @keyframes movimientoCubo{
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(50px); }
+  }
+  

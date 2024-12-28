@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inicio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .card-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #45a049;
+            text-decoration: none;
+        }
+        .button.red {
+            background-color: #f44336;
+        }
+        .button.red:hover {
+            background-color: #da190b;
+        }
+        .comments-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+
+        .comments-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+
+        .comments-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comment-box {
+            margin-top: 20px;
+            overflow-y: auto;
+            max-height: 50vh;
+            padding-right: 10px;
+        }
+
+        .comment-form {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comment {
+            background: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .comment-user {
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+
+        .comment-date {
+            font-size: 0.8em;
+            color: #666;
+        }
+
+        .ban-message {
+            margin-top: 15px;
+        }
+        
+        .ban-alert {
+            background: #ffebee;
+            border: 1px solid #ef5350;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .ban-alert h3 {
+            margin: 0 0 10px 0;
+            color: #c62828;
+        }
+
+        .comment.admin-comment {
+            background: #e8f5e9;
+            border-left: 4px solid #1a237e;
+        }
+        
+        .comment-user.admin {
+            color: #1a237e;
+        }
+        
+        .admin-badge {
+            display: inline-block;
+            margin-right: 5px;
+            color: #1a237e;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Bienvenido</h1>
+        <div class="actions">
+            <a href="/create" class="button">Crear nueva tarjeta</a>
+            <a href="/logout" class="button red">Cerrar sesión</a>
+        </div>
+    </div>
+    
+    <h2>Tus tarjetas:</h2>
+    {% if cards %}
+        {% for card in cards %}
+            <div class="card">
+                <span class="card-number">Tarjeta #{{ loop.index }}</span>
+                <h3>{{ card.title }}</h3>
+                <p>{{ card.subtitle }}</p>
+                <a href="/card/{{ card.id }}">Ver más →</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay tarjetas aún</p>
+    {% endif %}
+
+    <div class="comments-button" onclick="showComments()">
+        💬
+    </div>
+
+    <div id="commentsModal" class="comments-modal">
+        <div class="comments-container">
+            <h2>Comentarios y Reportes</h2>
+            
+            <div class="comment-form">
+                <form onsubmit="submitComment(event)">
+                    <textarea name="comment_text" placeholder="Escribe tu comentario aquí..." required></textarea>
+                    <button type="submit" class="button">Enviar</button>
+                    <button type="button" class="button red" onclick="hideComments()">Cerrar</button>
+                </form>
+            </div>
+
+            <div id="commentsList" class="comment-box">
+                <!-- Los comentarios se cargarán aquí -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showComments() {
+            document.getElementById('commentsModal').style.display = 'block';
+            loadComments();
+        }
+
+        function hideComments() {
+            document.getElementById('commentsModal').style.display = 'none';
+        }
+
+        function loadComments() {
+            fetch('/get_comments')
+                .then(response => response.json())
+                .then(comments => {
+                    const commentsList = document.getElementById('commentsList');
+                    comments.reverse();
+                    commentsList.innerHTML = comments.map(comment => `
+                        <div class="comment ${comment.isAdmin ? 'admin-comment' : ''}">
+                            <div class="comment-user ${comment.isAdmin ? 'admin' : ''}">
+                                ${comment.user}
+                            </div>
+                            <div class="comment-text">${comment.text}</div>
+                            <div class="comment-date">${comment.date}</div>
+                        </div>
+                    `).join('');
+                    
+                    commentsList.scrollTop = 0;
+                });
+        }
+
+        function submitComment(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            fetch('/add_comment', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      form.reset();
+                      loadComments();
+                  } else if (data.error && data.error.includes('baneado')) {
+                      const errorDiv = document.createElement('div');
+                      errorDiv.className = 'ban-message';
+                      errorDiv.innerHTML = `
+                          <div class="ban-alert">
+                              <h3>⚠️ Usuario Baneado</h3>
+                              <p>${data.error}</p>
+                          </div>
+                      `;
+                      form.appendChild(errorDiv);
+                      setTimeout(() => errorDiv.remove(), 5000);
+                  }
+              });
+        }
+    </script>
+</body>
+</html> 

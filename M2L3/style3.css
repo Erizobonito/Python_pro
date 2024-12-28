@@ -1,0 +1,172 @@
+/* Variables para el tema */
+:root {
+    --primary-color: #ffdd57; /* Un dorado suave */
+    --background-color: #1b1b1b; /* Fondo oscuro */
+    --card-background: rgba(255, 255, 255, 0.1); /* Efecto vidrio */
+    --text-color: #e0e0e0; /* Texto claro */
+    --accent-color: #9e9e9e; /* Color de acento gris */
+    --shadow-color: rgba(0, 0, 0, 0.7); /* Sombra oscura */
+    --transition-speed: 0.4s;
+}
+
+/* Configuración general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    color: var(--text-color);
+}
+
+body {
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    transition: background-color var(--transition-speed);
+}
+
+/* Estilo del contenedor */
+.container {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    background-color: var(--card-background);
+    border-radius: 15px;
+    backdrop-filter: blur(8px); /* Efecto vidrio esmerilado */
+    box-shadow: 0px 8px 20px var(--shadow-color);
+    overflow: hidden;
+    animation: fadeIn 1s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero */
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Encabezado principal */
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+}
+
+/* Subencabezados */
+h2 {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin: 50px 0;
+    padding-left: 15px;
+    border-left: 4px solid var(--primary-color);
+    animation: slideInFromLeft 3s ease-out;
+}
+
+@keyframes slideInFromLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Párrafos con fondo translúcido */
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    border-left: 3px solid var(--primary-color);
+}
+
+/* Estilo de lista en diseño de tarjeta */
+ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+li {
+    background-color: var(--card-background);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px var(--shadow-color);
+}
+
+/* Imagen con efecto de marco */
+img {
+    max-width: 20%; /* Ajuste de tamaño */
+    display: block;
+    margin: 20px auto;
+    border-radius: 12px;
+    border: 2px solid var(--primary-color);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+img:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7);
+}
+
+/* Estilo de botones */
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 15px;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+button:hover {
+    background-color: var(--text-color);
+    color: var(--background-color);
+    transform: translateY(-3px);
+}
+
+/* Animación de desplazamiento */
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scroll-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+    ul {
+        grid-template-columns: 1fr;
+    }
+}

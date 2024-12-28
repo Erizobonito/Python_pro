@@ -1,0 +1,14 @@
+.bounce {
+    display: inline-block;
+    transition: transform 0.2s;
+  }
+  
+  .bounce:hover {
+    animation: bounce 0.5s;
+  }
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  

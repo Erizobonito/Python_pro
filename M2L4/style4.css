@@ -1,0 +1,17 @@
+.color-change {
+    font-size: 2em;
+    text-align: center;
+    padding: 20px;
+    animation: colorCycle 5s infinite; /* Duración de 5 segundos, ciclo infinito */
+  }
+  
+  /* Animación de cambio de color */
+  @keyframes colorCycle {
+    0% { color: #FF5733; }   /* Rojo-anaranjado */
+    20% { color: #33FF57; }  /* Verde */
+    30% { color: #3357FF; }  /* Azul */
+    40% { color: #FF33A1; }  /* Rosa */
+    80% { color: #F3FF33; }  /* Amarillo */
+    100% { color: #FF5733; } /* Vuelve al primer color */
+  }
+  

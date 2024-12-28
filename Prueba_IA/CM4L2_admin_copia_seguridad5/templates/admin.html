@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Panel de Administrador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .user-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .user-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .card {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+            position: relative;
+        }
+        .logout-btn {
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .card-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #e8eaf6;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #1a237e;
+        }
+        .admin-section {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .admin-comment {
+            background: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #1a237e;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .ban-button, .unban-button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .ban-button {
+            background: #f44336;
+            color: white;
+        }
+        
+        .unban-button {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1100;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .comments-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background-color: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 100;
+            font-size: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .comments-toggle-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .banned-count {
+            background: #f44336;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 8px;
+            font-size: 14px;
+        }
+
+        .admin-section {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .comment.admin-comment {
+            background: #e8f5e9;
+            border-left: 4px solid #1a237e;
+        }
+        
+        .comment-user.admin {
+            color: #1a237e;
+        }
+        
+        .admin-badge {
+            display: inline-block;
+            margin-right: 5px;
+            color: #1a237e;
+        }
+
+        .comments-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 100;
+            font-size: 20px;
+        }
+
+        .comments-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+
+        .comments-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comment-box {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding-right: 10px;
+        }
+
+        .comment {
+            background: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+            position: relative;
+        }
+
+        .comment.admin-comment {
+            border-left-color: #1a237e;
+            background: #e8f5e9;
+        }
+
+        .comment-user {
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+
+        .comment-user.admin {
+            color: #1a237e;
+        }
+
+        .comment-actions {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            display: flex;
+            gap: 5px;
+        }
+
+        .ban-button {
+            padding: 5px 10px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .admin-controls {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #1a237e;
+        }
+
+        .active-ban {
+            background: #ffebee;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete-button {
+            padding: 5px 10px;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background: #b71c1c;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Panel de Administrador</h1>
+        <a href="/logout" class="logout-btn">Cerrar Sesión</a>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-number">{{ user_data|length }}</div>
+            <div>Usuarios Registrados</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">
+                {% set total = namespace(value=0) %}
+                {% for data in user_data %}
+                    {% set total.value = total.value + data.card_count %}
+                {% endfor %}
+                {{ total.value }}
+            </div>
+            <div>Total de Tarjetas</div>
+        </div>
+    </div>
+
+    {% for data in user_data %}
+        <div class="user-section">
+            <div class="user-header">
+                <h2>Usuario: {{ data.user.login }}</h2>
+                <span>Tarjetas: {{ data.cards|length }}</span>
+            </div>
+            
+            {% if data.cards %}
+                {% for card in data.cards %}
+                    <div class="card">
+                        <span class="card-number">Tarjeta #{{ loop.index }}</span>
+                        <h3>{{ card.title }}</h3>
+                        <p><strong>Subtítulo:</strong> {{ card.subtitle }}</p>
+                        <p><strong>Contenido:</strong> {{ card.text }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Este usuario no tiene tarjetas.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <div class="comments-button" onclick="showComments()">
+        💬
+    </div>
+
+    <div id="commentsModal" class="comments-modal">
+        <div class="comments-container">
+            <h2>Panel de Comentarios</h2>
+            
+            <div class="comment-form">
+                <form onsubmit="submitAdminComment(event)">
+                    <textarea name="comment_text" placeholder="Escribe un comentario como administrador..." required></textarea>
+                    <div class="form-buttons">
+                        <button type="submit" class="button">Enviar como Administrador</button>
+                        <button type="button" class="button red" onclick="hideComments()">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="admin-controls">
+                <h3>Usuarios Baneados</h3>
+                <div id="activeBans">
+                    {% for ban in active_bans %}
+                        <div class="active-ban">
+                            <span>{{ ban.user_login }} - Hasta: {{ ban.end_date.strftime('%Y-%m-%d %H:%M') }}</span>
+                            <button onclick="unbanUser('{{ ban.user_login }}')" class="unban-button">
+                                Quitar Ban
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div id="commentsList" class="comment-box">
+                <!-- Los comentarios se cargarán aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para banear usuario -->
+    <div id="banModal" class="modal">
+        <div class="modal-content">
+            <h3>Banear Usuario</h3>
+            <form id="banForm" onsubmit="submitBan(event)">
+                <input type="hidden" id="banUserLogin" name="user_login">
+                <div class="form-group">
+                    <label>Duración (días):</label>
+                    <input type="number" name="duration" min="1" value="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Razón:</label>
+                    <textarea name="reason" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="button">Banear</button>
+                    <button type="button" class="button red" onclick="hideBanForm()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showComments() {
+            document.getElementById('commentsModal').style.display = 'block';
+            loadComments();
+        }
+
+        function hideComments() {
+            document.getElementById('commentsModal').style.display = 'none';
+        }
+
+        function loadComments() {
+            fetch('/get_comments')
+                .then(response => response.json())
+                .then(comments => {
+                    const commentsList = document.getElementById('commentsList');
+                    comments.reverse();
+                    commentsList.innerHTML = comments.map(comment => `
+                        <div class="comment ${comment.isAdmin ? 'admin-comment' : ''}">
+                            <div class="comment-user ${comment.isAdmin ? 'admin' : ''}">
+                                ${comment.user}
+                            </div>
+                            <div class="comment-text">${comment.text}</div>
+                            <div class="comment-date">${comment.date}</div>
+                            ${!comment.isAdmin ? `
+                                <div class="comment-actions">
+                                    <button onclick="showBanForm('${comment.user}')" class="ban-button">
+                                        Banear
+                                    </button>
+                                    <button onclick="deleteComment(${comment.id})" class="delete-button">
+                                        🗑️
+                                    </button>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('');
+                });
+        }
+
+        function submitAdminComment(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            fetch('/add_comment', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      form.reset();
+                      loadComments();
+                  } else {
+                      alert('Error al enviar el comentario: ' + data.error);
+                  }
+              });
+        }
+
+        function deleteComment(commentId) {
+            if (!confirm('¿Seguro que quieres eliminar este comentario?')) return;
+            
+            const formData = new FormData();
+            formData.append('comment_id', commentId);
+            
+            fetch('/delete_comment', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      loadComments();
+                  } else {
+                      alert('Error al eliminar el comentario: ' + data.error);
+                  }
+              });
+        }
+
+        function showBanForm(userLogin) {
+            document.getElementById('banUserLogin').value = userLogin;
+            document.getElementById('banModal').style.display = 'block';
+        }
+        
+        function hideBanForm() {
+            document.getElementById('banModal').style.display = 'none';
+        }
+        
+        function submitBan(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            fetch('/admin/ban_user', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Usuario baneado correctamente');
+                    hideBanForm();
+                    loadComments();
+                } else {
+                    alert('Error al banear usuario: ' + data.error);
+                }
+            })
+            .catch(error => {
+                alert('Error al banear usuario: ' + error);
+            });
+        }
+        
+        function unbanUser(userLogin) {
+            if (!confirm('¿Seguro que quieres quitar el ban a este usuario?')) return;
+            
+            const formData = new FormData();
+            formData.append('user_login', userLogin);
+            
+            fetch('/admin/unban_user', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      location.reload();
+                  } else {
+                      alert('Error al quitar el ban: ' + data.error);
+                  }
+              });
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,184 @@
+/* Variables de tema */
+:root {
+    --primary-color: #348feb; /* Azul vibrante */
+    --secondary-color: #f4f4f9; /* Fondo claro */
+    --text-color: #222; /* Texto oscuro */
+    --accent-color: #ffb627; /* Amarillo acentuado */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    --transition-speed: 0.4s;
+}
+
+/* Estilo global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Verdana', sans-serif;
+    color: var(--text-color);
+    letter-spacing: 0.08em; /* Separación entre letras */
+    word-spacing: 0.15em; /* Espaciado entre palabras */
+}
+
+body {
+    background-color: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 900px;
+    width: 100%;
+    padding: 40px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 10px 30px var(--shadow-color);
+    overflow: hidden;
+    line-height: 1.7; /* Espaciado entre líneas */
+    transition: all var(--transition-speed);
+}
+
+/* Encabezado principal */
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    letter-spacing: 0.12em;
+    word-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    text-shadow: 1px 1px 3px var(--shadow-color);
+}
+
+/* Encabezados secundarios */
+h2 {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin: 25px 0 15px;
+    padding-left: 12px;
+    border-left: 4px solid var(--accent-color);
+    letter-spacing: 0.1em;
+}
+
+/* Párrafos */
+p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    padding: 15px 10px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.03); /* Fondo suave */
+    border-left: 4px solid var(--primary-color);
+    color: var(--text-color);
+    letter-spacing: 0.08em;
+    word-spacing: 0.2em;
+}
+
+/* Lista estilizada */
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Separación entre elementos de lista */
+}
+
+li {
+    font-size: 1.1rem;
+    background: var(--secondary-color);
+    color: var(--text-color);
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px var(--shadow-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+    word-spacing: 0.25em;
+}
+
+li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px var(--shadow-color);
+}
+
+/* Estilo de la imagen */
+img {
+    max-width: 40%;
+    display: block;
+    margin: 30px auto;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s, box-shadow 0.4s;
+    border: 3px solid var(--accent-color);
+}
+
+img:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Botón personalizado */
+button {
+    display: inline-block;
+    padding: 12px 25px;
+    margin-top: 20px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    letter-spacing: 0.1em;
+    word-spacing: 0.2em;
+}
+
+button:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-4px);
+}
+
+/* Efecto hover y animación de entrada */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInEffect 1s ease-out forwards;
+}
+
+@keyframes fadeInEffect {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    p, li, button {
+        font-size: 1rem;
+    }
+
+    img {
+        max-width: 20%;
+    }
+
+    .container {
+        padding: 30px;
+    }
+}

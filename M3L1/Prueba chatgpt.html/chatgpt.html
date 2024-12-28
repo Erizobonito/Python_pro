@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Función de Bienvenida</title>
+    <script>
+        function mostrarBienvenida() {
+            // Solicita el nombre del usuario
+            const nombre = prompt("¿Cuál es tu nombre?");
+            
+            // Si el usuario ingresa su nombre, muestra un mensaje personalizado
+            if (nombre) {
+                document.getElementById("mensajeBienvenida").innerText = `¡Bienvenido, ${nombre}!`;
+            } else {
+                document.getElementById("mensajeBienvenida").innerText = "¡Bienvenido a nuestra página!";
+            }
+        }
+    </script>
+</head>
+<body onload="mostrarBienvenida()">
+
+    <h1 id="mensajeBienvenida">¡Bienvenido a nuestra página!</h1>
+    <p>Esperamos que disfrutes tu visita.</p>
+
+</body>
+</html>

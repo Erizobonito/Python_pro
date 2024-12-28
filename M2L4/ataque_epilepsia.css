@@ -1,0 +1,27 @@
+/* Estilos para el fondo animado del body */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    animation: fondoColor 1ms infinite; /* Duración de 10 segundos, ciclo infinito */
+  }
+  
+  /* Estilos para el texto centrado */
+  h1 {
+    color: white;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Definición de la animación del fondo */
+  @keyframes fondoColor {
+    0% { background-color: #FF5733; }    /* Rojo-anaranjado */
+    20% { background-color: #33FF57; }   /* Verde */
+    40% { background-color: #3357FF; }   /* Azul */
+    60% { background-color: #FF33A1; }   /* Rosa */
+    80% { background-color: #F3FF33; }   /* Amarillo */
+    100% { background-color: #FF5733; }  /* Vuelve al rojo-anaranjado */
+  }
+  

@@ -26,4 +26,19 @@ async def mem(ctx):
  
     await ctx.send(file=picture)
 
-bot.run('MTI5NDcwMDEwNTYzMDQ4MjQ2Mg.GSy9UU.BmjfdncFJ2cUh_EOTkYw-XUeU7Vju3MwLHvAiM')
+
+async def gru(ctx):
+    protocols = ['http', 'https']
+    domains = ['com', 'net', 'org', 'io', 'dev']
+    words = ['example', 'test', 'sample', 'demo', 'random']
+    
+    protocol = random.choice(protocols)
+    domain = random.choice(words) + '.' + random.choice(domains)
+    path = '/path' + str(random.randint(100, 999))
+    
+    return f'{protocol}://{domain}{path}'
+
+    print("URL aleatoria:", generate_random_url())
+
+
+bot.run('MTI5NDcxODM3OTk0MDEyMjc0Ng.GDxDgA.2kvsJeh234b5fvtjaAw19moCluNdSt5ZpEfG4Y')

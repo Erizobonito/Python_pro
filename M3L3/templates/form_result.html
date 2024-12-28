@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados del formulario</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #0EB07C;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .result {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .result p {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .result h2 {
+            font-size: 2rem;
+            color: #0EB07C;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #0EB07C;
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #098B5E;
+        }
+    </style>
+</head>
+<body>
+    {% block content %}
+    <div class="container">
+        <div class="result">
+            <h2>Gracias por rellenar el formulario</h2>
+            <p><strong>Tu nombre:</strong> {{ name }}</p>
+            <p><strong>Tu E-Mail:</strong> {{ email }}</p>
+            <p><strong>Tu dirección:</strong> {{ address }}</p>
+            <p><strong>Tu fecha:</strong> {{ date }}</p>
+            <a href="/" class="button">Volver a la página principal</a>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
